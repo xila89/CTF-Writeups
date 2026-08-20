@@ -37,7 +37,9 @@ The exposed paths provided access to leaked data belonging to QuantumCore System
 
 ## 2. Victim Data Analysis
 
-I downloaded and extracted the QuantumCore and AetherFlow archives and began reviewing their contents for anything that might provide more information about the victims, the ransomware group, or how the compromises occurred. While comparing the data from both organizations, one name stood out: ``` i.mccarthy ```. The same user appeared in data belonging to both Quantumcore and Aetherflow. Since the datasets came from two separate victim organizations, the overlap seemed quite suspicious. I investigated the accounts further to determine wehter it could represent a connection between the victims or the threat actors.  
+I downloaded and extracted the QuantumCore and AetherFlow archives and began reviewing their contents for anything that might provide more information about the victims, the ransomware group, or how the compromises occurred.   
+
+While comparing the data from both organizations, one name stood out: ``` i.mccarthy ```. The same user appeared in data belonging to both Quantumcore and Aetherflow. Since the datasets came from two separate victim organizations, the overlap seemed quite suspicious. I investigated the accounts further to determine wehter it could represent a connection between the victims or the threat actors.  
 
 It turned out to be a dead end.  
 
