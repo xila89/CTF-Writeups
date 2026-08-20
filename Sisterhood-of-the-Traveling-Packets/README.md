@@ -39,7 +39,7 @@ The exposed paths provided access to leaked data belonging to QuantumCore System
 
 I downloaded and extracted the QuantumCore and AetherFlow archives and began reviewing their contents for anything that might provide more information about the victims, the ransomware group, or how the compromises occurred.   
 
-While comparing the data from both organizations, one name stood out: ``` i.mccarthy ```. The same user appeared in data belonging to both Quantumcore and Aetherflow. Since the datasets came from two separate victim organizations, the overlap seemed quite suspicious. I investigated the accounts further to determine wehter it could represent a connection between the victims or the threat actors.  
+While comparing the data from both organizations, one name stood out: ``` i.mccarthy ```. The same user appeared in data belonging to both Quantumcore and Aetherflow. Since the datasets came from two separate victim organizations, the overlap seemed quite suspicious. I investigated the account further to determine wehter it could represent a connection between the victims or the threat actors.  
 
 It turned out to be a dead end.  
 
@@ -82,15 +82,17 @@ At this point, I still didn't have the password. But, I did have a list of known
 
 Navigating directly to the `/api.php` endpoint returned an error stating that a required `action` parameter was missing. More importantly, the response also provided a list of valid actions, which included: `upload`, `status`, `messages`, `decrypt`, `wallets`, `payload`, and `exfil`. I began testing the exposed endpoints starting with: `/api.php?action=status`. I then worked through all other available actions to determine what information could be accessed without authentication. 
 
-**Wallets**
+![api-endpoint](Sisterhood-Images/api-endpoint.png)
+
+### Wallets
 
 The `wallets` endpoint exposed cryptocurrency wallet information along with operational details such as wallet rotation and the total amount of Bitcoin received. 
 
-**Payloads**
+### Payloads
 
 The `payloads` endpoint revealed information about staged malware, including target organizations, ransomware variants, droppers, EDR bypass status, build timestamps, and hashes. A couple of the hashes immediately looked familiar: `e3b0c44298fc1c149afbf4c8996fb924...` and `d41d8cd98f00b204e9800998ecf8427e`. These are recognizable SHA-256 and MD5 hashes associated with empty content, making them more interesting as artifacts or red herrings than a useful indicator. 
 
-**Exfiltration**
+### Exfiltration
 
 The `exfil` endpoint exposed information about completed exfiltration jobs. Among the listed targets where `AetherFlow` and `QuantumCore Systems`, directly correlating the API data with the victim archives I had previously analyzed. 
 
@@ -108,8 +110,8 @@ I changed the value to `converstion_id=0' and received a valid response. From th
 
 The messages were available without any authentication or apparent authorization check. Simply knowing -- or guessing -- a valid numeric conversation ID was enough to retrieve internal communications. 
 
-> The Finding? Broken Object-Level Authorization
-> The predictable conversation IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. This is consistent with **Insecure Direct Object Reference (IDOR)**, commonly categorized in APIs as **Broken Object Level Authorization (BOLA)** 
+> Finding: Insecure Direct Object Reference (IDOR)/Broken Object-Level Authorization (BOLA)
+> The predictable conversation IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. 
 
 ## 8. Credential Discovery
 
@@ -122,7 +124,7 @@ This immediately connected back to the `.exfil.sh` file I had discovered inside 
 
 Apparently, forgetting to delete it wasn't a one-time concern.  
 
-More importantly, the conversation later turned to credentials. Mora asked another crew member for their FTP password after losing it. The response contained an encoded string and explicitly identified it as Mora's password. Mora then revealed another security problem, her beloved password had been used everywhere since 2011.  
+More importantly, the conversation later turned to credentials. Mora asked another crew member for their FTP password after losing it. The response contained an encoded string and explicitly identified it as Mora's password. Mora then revealed another security problem, she'd apparently been using the same password since 2011. 
 
 ![Internal messages revealing credentials](Sisterhood-Images/message-creds.png)
 
@@ -143,7 +145,7 @@ The final compromise wasn't the result of a single vulnerability. It came from s
 * **Verbose API errors:** Error responses disclosed valid API actions and even provided the expected format for conversation IDs.
 * **Broken object-level authorization:** Predictable numeric conversation IDs could be enumerated without appropriate authorization.
 * **Credential exposure:** A valid user's password was shared through internal communications using reversible encoding: Base64 in this case.
-* **Password reuse:** The recovered password had reportedly been reused for years.
+* **Password reuse:** The recovered password had reportedly been in use since 2011. 
 
 Individually, several of these issues may not have provided administrative access. But together, they created a path from publicly accessible information to a complete account compromise. 
 
