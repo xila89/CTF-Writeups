@@ -80,7 +80,7 @@ At this point, I still didn't have the password. But, I did have a list of known
 
 ## 6. API Enumeration
 
-Navigating directly to the `/api.php` endpoint returned an error stating that a required `action` parameter was missing. More importantly, the response also provided a list of valid actions, which included: `upload`, `status`, `messages`, `decrypt`, `wallets`, `payload`, and `exfil`. I began testing the exposed endpoints starting with: `/api.php?action=status`. I then worked through all other available actions to determine what information could be accessed without authentication. 
+Navigating directly to the `/api.php` endpoint returned an error stating that a required `action` parameter was missing. More importantly, the response also provided a list of valid actions, which included: `upload`, `status`, `messages`, `decrypt`, `wallets`, `payloads`, and `exfil`. I began testing the exposed endpoints starting with: `/api.php?action=status`. I then worked through all other available actions to determine what information could be accessed without authentication. 
 
 ![api-endpoint](Sisterhood-Images/api-endpoint.png)
 
