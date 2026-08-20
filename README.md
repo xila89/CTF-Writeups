@@ -11,4 +11,4 @@ Rather than documenting only the successful path to the flag, these writeups foc
 
 Investigation of a fictional ransomware group's Tor-hosted infrastructure involving exposed victim data, artifact and shell-script analysis, web and API enumeration, broken access controls, internal message exposure, and credential discovery. 
 
-**Key techniques:** Linux * Tor * Web Enumeration * API Analysis * Artifact Analysis * IDOR/BOLA * Credential Analysis
+**Key techniques:** Linux · Tor · Web Enumeration · API Analysis · Artifact Analysis · IDOR/BOLA · Credential Analysis
