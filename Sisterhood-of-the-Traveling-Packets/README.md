@@ -119,4 +119,43 @@ SCREENSHOT OF ERROR
 > The Finding? Broken Object-Level Authorization
 > The predictable conversation IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. This is consistent with **Insecure Direct Object Reference (IDOR)**, commonly categorized in APIs as **Broken Object Level Authorization (BOLA)** 
 
+## 8. Credential Discovery
+
+Enumeration of the messages eventually led to `conversation_id=2`. This conversation contained several useful pieces of information.  
+
+One messages instruction the crew to: 
+> "stage everything in /tmp like usual and use the upload script. dont forget to delete it this time lol"
+
+This immediately connected back to the `.exfil.sh` file I had discovered inside the AetherFlow archive. The internal messages confirmed that `/tmp` was used for staging and that the leaked script was part of the group's normal exfiltration workflow.  
+
+Apparently, forgetting to delete it wasn't a one-time concern.  
+
+More importantly, the conversation later turned to credentials. Mora asked another crew member for their FTP password after losing it. The response contained an encoded string and explicitly identified it as Mora's password. Mora then revealed another security problem, her beloved password had been used everywhere since 2011.  
+
+SCREENSHOT HERE converstaion2
+
+I decoded the value and recovered Mora's plaintext password. The finding connected directly back to the account enumeration performed earlier. I already knew that `Mora` was a valid account on `/admin.php` and now I had the password associated with that account. 
+
+## 9. Administrative Access
+
+I returned to `/admin.php` and authenticated using Mora's recovered credentials. The login was successful. Access to the protected administrative area revealed the challenge flag. 
+
+# Key Findings
+
+The final compromise wasn't the result of a single vulnerability. It came from several, smaller security and operational failures that could be chained together: 
+
+* **Sensitive paths exposed in page source:** Client-accessible source code revealed direct paths to victim data.
+* **Operational artifact exposure:** `.exfil.sh` disclosed information about the group's staging process, API usage, infrastructure, and authentication.
+* **Sensitive paths disclosed through `robots.txt`:** The file revealed both the administrative and API interfaces.
+* **Username enumeration:** Differences in login behavior allowed public crew identities to be confirmed as valid accounts.
+* **Verbose API errors:** Error responses disclosed valid API actions and even provided the expected format for conversation IDs.
+* **Broken object-level authorization:** Predictable numeric conversation IDs could be enumerated without appropriate authorization.
+* **Credential exposure:** A valid user's password was shared through internal communications using reversible encoding: Base64 in this case.
+* **Password reuse:** The recovered password had reportedly been reused for years.
+
+Individually, several of these issues may not have provided administrative access. But together, they created a path from publicly accessible information to a complete account compromise. 
+
+# Lessons Learned
+
+One of the biggest takeaways from this challenge was the reminder that small security failures rarely exist in isolation. If there's one, there's bound to be more. Additionally, information that might seem relatively harmless on its own can become much more significant when it can be correlated with weaknesses elsewhere in an environment. 
 
