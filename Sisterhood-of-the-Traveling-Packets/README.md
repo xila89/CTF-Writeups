@@ -27,7 +27,7 @@ I began by manually exploring the ransomware group's Tor hosted website and revi
 
 Continuing through the source, however, revealed something much more interesting. Direct references to downloadable data belonging to two victim organizations. 
 
-/downloads/quantumcore/quantumcore_leak.zip
+/downloads/quantumcore/quantumcore_leak.zip  
 /downloads/aetherflow/aetherflow_leak.zip
 
 The exposed paths provided access to leaked data belonging to QuantumCore System and AetherFlow Enterprises, giving me the next place to investigate. 
