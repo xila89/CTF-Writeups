@@ -23,7 +23,7 @@ Tor Site → Page Source Inspection → Exposed Victim Downloads → Victim Data
 
 ## 1. Initial Reconnaissance
 
-I began by manually exploring the ransomware group's Tor hosted website and reviewing the page source for information that was not visible through the normal interface. One of the first things that stood out was a suspicious Base64-encoded string. I decoded the value to determine whether it was the flag or contained hidden information, but it was a false flag that encouraged you to keep looking. 
+I began by manually exploring the ransomware group's Tor-hosted website and reviewing the page source for information that was not visible through the normal interface. One of the first things that stood out was a suspicious Base64-encoded string. I decoded the value to determine whether it was the flag or contained hidden information, but it was a decoy flag that encouraged you to keep looking. 
 
 Continuing through the source, however, revealed something much more interesting. Direct references to downloadable data belonging to two victim organizations. 
 
