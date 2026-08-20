@@ -35,3 +35,23 @@ Continuing through the source, however, revealed something much more interesting
 
 The exposed paths provided access to leaked data belonging to QuantumCore Systems and AetherFlow Enterprises, giving me the next place to investigate. 
 
+## 2. Victim Data Analysis
+
+I downloaded and extracted the QuantumCore and AetherFlow archives and began reviewing their contents for anything that might provide more information about the victims, the ransomware group, or how the compromises occurred. While comparing the data from both organizations, one name stood out: ``` i.mccarthy ```. The same user appeared in data belonging to both Quantumcore and Aetherflow. Since the datasets came from two separate victim organizations, the overlap seemed quite suspicious. I investigated the accounts further to determine wehter it could represent a connection between the victims or the threat actors.  
+
+It turned out to be a dead end.  
+
+Still, it was a reasonable lead based on the evidence available at the time. With nothing else to connect ``` i.mccarthy ``` to the investigation, I returned to examining the downloaded files for anything I may have missed. 
+
+## 3. Hidden Exfiltration Script
+
+While examining the extracted AetherFlow files from the command line, I ran ``` ls -la ``` Using ``` -a ``` revealed a hidden file that wasn't initially visible in the directory listing: ``` .exfil.sh ```  
+
+I opened the script and immediately found something interesting: TODO PICTURE 
+
+Oops. Someone apparently forgot that there.  
+
+The script appeared to be part of the group's staging and exfiltration process and exposed several pieces of their internal infrastructure, including a Tor-hosted panel address, an API upload endpoint, an ``` X-Panel-Key ``` header and authentication key, and the files selected for exfiltration. The script also showed that the targeted files were Base64 encoded before being uploaded to the panel through ``` /api.php?action=upload ```. This provided the first direct look at how the group was staging and transmitting stolen data -- and an operational artifact they clearly hadn't intended to include in the victim archive. 
+
+SCREENSHOT OF EXFIL.SH HERE
+
