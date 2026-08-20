@@ -6,5 +6,9 @@ Rather than documenting only the successful path to the flag, these writeups foc
 
 ## Write-Ups
 
-### Sisterhood of the Traveling Packets
-Ransomware infrastructure investigation involving Tor, exposed victim data, artifact analysis, API enumeration, broken access controls, and credential discovery. 
+### [Sisterhood of the Traveling Packets](Sisterhood-of-the-Traveling-Packets)
+**Ransomware infrastructure investigation**
+
+Investigation of a fictional ransomware group's Tor-hosted infrastructure involving exposed victim data, artifact and shell-script analysis, web and API enumeration, broken access controls, internal message exposure, and credential discovery. 
+
+**Key techniques:** Linux * Tor * Web Enumeration * API Analysis * Artifact Analysis * IDOR/BOLA * Credential Analysis
