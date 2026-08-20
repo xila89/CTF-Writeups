@@ -151,5 +151,5 @@ Individually, several of these issues may not have provided administrative acces
 
 # Lessons Learned
 
-One of the biggest takeaways from this challenge was the reminder that small security failures rarely exist in isolation. If there's one, there's bound to be more. Additionally, information that might seem relatively harmless on its own can become much more significant when it can be correlated with weaknesses elsewhere in an environment. 
+One of the biggest takeaways from this challenge was the reminder that small security failures rarely exist in isolation. If there's one, there's bound to be more. Additionally, information that might seem relatively harmless on its own can become much more significant when it can be correlated with weaknesses elsewhere in an environment. This challenge was a great example of how seemingly minor information disclosure can build on one another until they provide a path to full account compromise. 
 
