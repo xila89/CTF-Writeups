@@ -61,3 +61,63 @@ The script also showed that the targeted files were Base64 encoded before being 
 
 SCREENSHOT OF EXFIL.SH HERE
 
+## 4. Web Enumeration
+
+After investigating the downloaded files, I returned to the web application. Since the source code had exposed directories under `/downloads`, I tested variations to see whether additional directories related to the ransomware group were accessible. I tried several paths based on the group's name, including varations of `\downloads\sisterhood`, but these attempts didn't reveal anything useful.  
+
+With that lead exhausted, I returned to standard web enumeration and checked `robots.txt` and `sitemap.xml`.  
+
+`robots.txt` revealed two particularly interesting paths:  
+`/admin.php` and `/api.php`. These became the next focus of the investigation. 
+
+## 5. Account Enumeration
+
+I first investigated the `/admin.php` endpoint, which presented a login page.  
+
+The group's public crew page had already provided several known usernames. I tested each of these against the login page and noticed that the response differed depending on whether the username existed. The listed crew members all appeared to have valid accounts. Interestingly, the generic username `admin` did not.  
+
+At this point, I still didn't have the password. But, I did have a list of known-valid user accounts. I made a note of the finding and moved on to the API. 
+
+## 6. API Enumeration
+
+Navigating directly to the `/api.php` endpoint returned an error stating that a required `action` parameter was missing. More importantly, the response also provided a list of valid actions, which included: `upload`, `status`, `messages`, `decrypt`, `wallets`, `payload`, and `exfil`. I began testing the exposed endpoints starting with: `/api.php?action=status`. I then worked through all other available actions to determine what information could be accessed without authentication. 
+
+# Wallets
+
+The `wallets` endpoint exposed cryptocurrency wallet information along with operational details such as wallet rotation and the total amount of Bitcoin received. 
+
+SCREENSHOT OF WALLETS HERE
+
+# Payloads
+
+The `payloads` endpoint revealed information about staged malware, including target organizations, ransomware variants, droppers, EDR bypass status, build timestamps, and hashes. A couple of the hashes immediately looked familiar: `e3b0c44298fc1c149afbf4c8996fb924...` and `d41d8cd98f00b204e9800998ecf8427e`. These are recognizable SHA-256 and MD5 hashes associated with empty content, making them more interesting as artifacts or red herrings than a useful indicator. 
+
+SCREENSHOTS OF PAYLOAD HERE
+
+# Exfiltration
+
+The `exfil` endpoint exposed information about completed exfiltration jobs. Among the listed targets where `AetherFlow` and `QuantumCore Systems`, directly correlating the API data with the victim archives I had previously analyzed. 
+
+SCREENSHOT OF EXFIL HERE
+
+## 7. Internal Message Enumeration
+
+The `messages` endpoint was particularly interesting. Internal communications could potentially reveal additional infrastructure, operational details, or even credentials. However, I didn't initially know what value the endpoint expected for a conversation identifier. So, I just tested it with a random one: `/api.php?action=messages&conversation_id=test`. 
+
+Instead of simply rejecting the request, the API responded with another very helpful error: 
+
+> { "error": "conversation not found", "hint": "valid id provided (ex. conversation_id=0)" }
+
+That's a pretty good hint!  
+
+I changed the value to `converstion_id=0' and received a valid response. From there, I incremented the numeric ID and began reading through the available conversations.  
+
+The messages were available without any authentication or apparent authorization check. Simply knowing -- or guessing -- a valid numeric conversation ID was enough to retrieve internal communications. 
+
+SCREENSHOT OF ERROR
+
+>Finding: Broken Object-Level Authorization
+
+The predictable convesration IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. This is consistent with **Insecure Direct Object Reference (IDOR)**, commonly categorized in APIs as **Broken Object Level Authorization (BOLA)** 
+
+
