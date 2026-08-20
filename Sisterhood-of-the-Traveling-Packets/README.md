@@ -49,7 +49,9 @@ Still, it was a reasonable lead based on the evidence available at the time. Wit
 
 While examining the extracted AetherFlow files from the command line, I ran ``` ls -la ``` Using ``` -a ``` revealed a hidden file that wasn't initially visible in the directory listing: ``` .exfil.sh ```  
 
-I opened the script and immediately found something interesting: TODO PICTURE 
+I opened the script and immediately found something interesting:  
+
+> '# TODO: delete this before zipping`  
 
 Oops. Someone apparently forgot that there.  
 
