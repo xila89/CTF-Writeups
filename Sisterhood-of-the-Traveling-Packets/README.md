@@ -19,33 +19,7 @@ The investigation ultimately involved analyzing exposed victim data, discovering
 
 # Investigation Path
 
-Tor Site 
-  ↓
-Page Source Inspection
-  ↓
-Exposed Victim Downloads
-  ↓
-Victim Data Analysis
-  ↓
-Hidden .exfil.sh Artifact
-  ↓
-Web Enumeration
-  ↓
-robots.txt
-  ↓
-/admin.php + /api.php
-  ↓
-Account & API Enumeration
-  ↓
-Internal Message Disclosure 
-  ↓
-Encoded Credential Discovery
-  ↓
-Credential Decoding
-  ↓
-Administrative Access
-  ↓
-Flag
+Tor Site → Page Source Inspection → Exposed Victim Downloads → Victim Data Analysis → Hidden .exfil.sh Artifact → Web Enumeration → robots.txt → /admin.php + /api.php → Account & API Enumeration → Internal Message Disclosure → Encoded Credential Discovery → Credential Decoding → Administrative Access → Flag
 
 ## 1. Initial Reconnaissance
 
