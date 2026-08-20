@@ -13,9 +13,9 @@ The investigation ultimately involved analyzing exposed victim data, discovering
 
 # Investigation Environment 
 
-* Operating System: Kali Linux
-* Network Access: Tor
-* Techniques: Source code inspection, artifact analysis, web enumeration, API enumeration, account enumeration, Base64 decoding, shell-script analysis, and cross-artifact correlation.
+* **Operating System:** Kali Linux
+* **Network Access:** Tor
+* **Techniques:** Source code inspection, artifact analysis, web enumeration, API enumeration, account enumeration, Base64 decoding, shell-script analysis, and cross-artifact correlation.
 
 # Investigation Path
 
@@ -25,10 +25,13 @@ Tor Site → Page Source Inspection → Exposed Victim Downloads → Victim Data
 
 I began by manually exploring the ransomware group's Tor-hosted website and reviewing the page source for information that was not visible through the normal interface. One of the first things that stood out was a suspicious Base64-encoded string. I decoded the value to determine whether it was the flag or contained hidden information, but it was a decoy flag that encouraged you to keep looking. 
 
-Continuing through the source, however, revealed something much more interesting. Direct references to downloadable data belonging to two victim organizations. 
+Continuing through the source, however, revealed something much more interesting. Direct references to downloadable data belonging to two victim organizations.  
 
-/downloads/quantumcore/quantumcore_leak.zip  
-/downloads/aetherflow/aetherflow_leak.zip
+``` /downloads/quantumcore ```
+``` /downloads/quantumcore/quantumcore_leak.zip ```  
 
-The exposed paths provided access to leaked data belonging to QuantumCore System and AetherFlow Enterprises, giving me the next place to investigate. 
+``` /downloads/aetherflow ``` 
+``` /downloads/aetherflow/aetherflow_leak.zip ```
+
+The exposed paths provided access to leaked data belonging to QuantumCore Systems and AetherFlow Enterprises, giving me the next place to investigate. 
 
