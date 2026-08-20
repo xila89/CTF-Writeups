@@ -116,8 +116,7 @@ The messages were available without any authentication or apparent authorization
 
 SCREENSHOT OF ERROR
 
-# The Finding? Broken Object-Level Authorization
-
-The predictable conversation IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. This is consistent with **Insecure Direct Object Reference (IDOR)**, commonly categorized in APIs as **Broken Object Level Authorization (BOLA)** 
+> The Finding? Broken Object-Level Authorization
+> The predictable conversation IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. This is consistent with **Insecure Direct Object Reference (IDOR)**, commonly categorized in APIs as **Broken Object Level Authorization (BOLA)** 
 
 
