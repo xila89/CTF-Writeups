@@ -59,7 +59,7 @@ The script appeared to be part of the group's staging and exfiltration process a
 
 The script also showed that the targeted files were Base64 encoded before being uploaded to the panel through ``` /api.php?action=upload ```. This provided the first direct look at how the group was staging and transmitting stolen data -- and an operational artifact they clearly hadn't intended to include in the victim archive. 
 
-[.exfil.sh script](Sisterhood-images/exfil-script.png)
+![.exfil.sh script](Sisterhood-images/exfil-script.png)
 
 ## 4. Web Enumeration
 
