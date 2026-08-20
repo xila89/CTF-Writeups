@@ -51,7 +51,7 @@ While examining the extracted AetherFlow files from the command line, I ran ``` 
 
 I opened the script and immediately found something interesting:  
 
-> '# TODO: delete this before zipping`  
+> `# TODO: delete this before zipping`  
 
 Oops. Someone apparently forgot that there.  
 
