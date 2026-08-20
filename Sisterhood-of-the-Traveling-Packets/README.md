@@ -55,7 +55,9 @@ I opened the script and immediately found something interesting:
 
 Oops. Someone apparently forgot that there.  
 
-The script appeared to be part of the group's staging and exfiltration process and exposed several pieces of their internal infrastructure, including a Tor-hosted panel address, an API upload endpoint, an ``` X-Panel-Key ``` header and authentication key, and the files selected for exfiltration. The script also showed that the targeted files were Base64 encoded before being uploaded to the panel through ``` /api.php?action=upload ```. This provided the first direct look at how the group was staging and transmitting stolen data -- and an operational artifact they clearly hadn't intended to include in the victim archive. 
+The script appeared to be part of the group's staging and exfiltration process and exposed several pieces of their internal infrastructure, including a Tor-hosted panel address, an API upload endpoint, an ``` X-Panel-Key ``` header and authentication key, and the files selected for exfiltration.   
+
+The script also showed that the targeted files were Base64 encoded before being uploaded to the panel through ``` /api.php?action=upload ```. This provided the first direct look at how the group was staging and transmitting stolen data -- and an operational artifact they clearly hadn't intended to include in the victim archive. 
 
 SCREENSHOT OF EXFIL.SH HERE
 
