@@ -82,23 +82,17 @@ At this point, I still didn't have the password. But, I did have a list of known
 
 Navigating directly to the `/api.php` endpoint returned an error stating that a required `action` parameter was missing. More importantly, the response also provided a list of valid actions, which included: `upload`, `status`, `messages`, `decrypt`, `wallets`, `payload`, and `exfil`. I began testing the exposed endpoints starting with: `/api.php?action=status`. I then worked through all other available actions to determine what information could be accessed without authentication. 
 
-# Wallets
+**Wallets**
 
 The `wallets` endpoint exposed cryptocurrency wallet information along with operational details such as wallet rotation and the total amount of Bitcoin received. 
 
-SCREENSHOT OF WALLETS HERE
-
-# Payloads
+**Payloads**
 
 The `payloads` endpoint revealed information about staged malware, including target organizations, ransomware variants, droppers, EDR bypass status, build timestamps, and hashes. A couple of the hashes immediately looked familiar: `e3b0c44298fc1c149afbf4c8996fb924...` and `d41d8cd98f00b204e9800998ecf8427e`. These are recognizable SHA-256 and MD5 hashes associated with empty content, making them more interesting as artifacts or red herrings than a useful indicator. 
 
-SCREENSHOTS OF PAYLOAD HERE
-
-# Exfiltration
+**Exfiltration**
 
 The `exfil` endpoint exposed information about completed exfiltration jobs. Among the listed targets where `AetherFlow` and `QuantumCore Systems`, directly correlating the API data with the victim archives I had previously analyzed. 
-
-SCREENSHOT OF EXFIL HERE
 
 ## 7. Internal Message Enumeration
 
@@ -113,8 +107,6 @@ That's a pretty good hint!
 I changed the value to `converstion_id=0' and received a valid response. From there, I incremented the numeric ID and began reading through the available conversations.  
 
 The messages were available without any authentication or apparent authorization check. Simply knowing -- or guessing -- a valid numeric conversation ID was enough to retrieve internal communications. 
-
-SCREENSHOT OF ERROR
 
 > The Finding? Broken Object-Level Authorization
 > The predictable conversation IDs combined with lack of authorization controls allowed internal messages to be accessed by changing the `conversation_id` parameter. This is consistent with **Insecure Direct Object Reference (IDOR)**, commonly categorized in APIs as **Broken Object Level Authorization (BOLA)** 
@@ -132,7 +124,7 @@ Apparently, forgetting to delete it wasn't a one-time concern.
 
 More importantly, the conversation later turned to credentials. Mora asked another crew member for their FTP password after losing it. The response contained an encoded string and explicitly identified it as Mora's password. Mora then revealed another security problem, her beloved password had been used everywhere since 2011.  
 
-SCREENSHOT HERE converstaion2
+![Internal messages revealing credentials](Sisterhood-Images/message-creds.png)
 
 I decoded the value and recovered Mora's plaintext password. The finding connected directly back to the account enumeration performed earlier. I already knew that `Mora` was a valid account on `/admin.php` and now I had the password associated with that account. 
 
