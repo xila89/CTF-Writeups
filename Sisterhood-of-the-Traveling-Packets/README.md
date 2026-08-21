@@ -1,4 +1,4 @@
-# Sisterhood of the Travelling Packets
+# Sisterhood of the Traveling Packets
 **Ransomware Infrastructure Investigation | CTF Write-Up**
 
 > **Authorization:** This write-up documents activities performed within an authorized Capture the Flag (CTF) environment. All systems, accounts, credentials, and infrastructure referenced were part of the challenge. 
